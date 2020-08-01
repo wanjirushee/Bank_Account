@@ -1,5 +1,5 @@
 
-
+from datetime import datetime
 class BankAccount:
   bank="Co - operative"
   
@@ -191,7 +191,52 @@ class BankAccount(Account):
             time=datetime.now()
             print("You have received {} from {} on {}".format(amount,receipient,self.formatted_time(time)))
   
-  
+  class MobileMoneyAccount(Account):
+    
+    def __init__(self,first_name,last_name,phone_number,service_provider):
+        self.service_provider=service_provider
+        self.airtime=[]
+        super().__init__(first_name,last_name,phone_number)
+        
+    def buy_airtime(self,amount):
+        try:
+            amount + 1
+        except TypeError:
+            print("Please enter an amount in figures")
+            
+        if amount < self.balance:
+            print("You do not have enough amount to buy airtime")
+            
+        else:
+            self.balance -= amount
+            time=datetime.now()
+            airtime={
+                "time":time,
+                "amount":amount
+            }
+            self.airtime.append(airtime)
+            print("You have bought airtime worth {} on {}".format(amount,self.get_formatted_time(time)))
+            
+    def send_money(self,amount,receipient):
+        try:
+            amount + 1
+        except Exception:
+            print("Please enter the correct amount")
+        
+        if amount <= self.balance:
+            print("Sorry!You must pay transaction fee")
+            
+        else:
+            time=datetime.now()
+            print("Confirm {} sent to {} on {}".format(amount,receipient,self.get_formatted_time(time)))
+            self.balance -= amount
+            print("You have sent {} to {} on {}".format(amount,receipient,self.get_formatted_time(time)))
+            
+            
+        
+        
+    
+
   
 acc1=BankAccount("Jeff", "Bezos")
 acc2=BankAccount("mark","zuckerberg")
